@@ -1,31 +1,41 @@
-
+from os import fwalk
 
 from langgraph.graph import StateGraph
 from typing import Dict
+from IPython.display import display,Image
+from langgraph.graph import START,END
+
 
 # 构建图
 builder = StateGraph(dict)
 
 def addition(state):
     print(state)
-    return {"x":state["x"] + 1}
+    return {"x":state['x'] + 1}
 
 def subtraction(state):
     print(state)
-    return {"y":state["x"] - 2}
-
-from langgraph.graph import START,END
+    return {"y":state['x'] - 2}
 
 # 添加节点
 builder.add_node("addition",addition)
 builder.add_node("subtraction",subtraction)
+
 
 # 构建节点之间的边
 builder.add_edge(START,"addition")
 builder.add_edge("addition","subtraction")
 builder.add_edge("subtraction",END)
 
+
 graph = builder.compile()
+initial_state = {"x":10}
+result = graph.invoke(initial_state)
+
+png_bytes = graph.get_graph(xray=True).draw_mermaid_png()
+with open("graph.png","wb") as f:
+    f.write(png_bytes)
+print("已保存为 graph.png")
 
 
 
