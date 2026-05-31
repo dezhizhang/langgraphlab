@@ -1,5 +1,9 @@
+
+
 from langchain_openai import ChatOpenAI
-import os
+from typing import Annotated,TypedDict
+from langgraph.graph import StateGraph,START,END
+
 
 
 
@@ -15,14 +19,7 @@ from typing import Annotated
 #     messages: Annotated[list,add_messages]
 #
 # graph_builder = StateGraph(State)
-#
-# llm = ChatOpenAI(
-#     model="gpt-4o",
-#     api_key="YOUR_OPENAI_API_KEY",
-#     base_url="https://koalaapi.com/v1",
-#     temperature=0.8,
-# )
-#
+
 # def chatbot(state:State):
 #     print("state",state)
 #     return {"messages":[llm.invoke(state["messages"])]}
